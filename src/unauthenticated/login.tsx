@@ -17,7 +17,7 @@ function LoginScreen({
     try {
       await run(login(values));
     } catch (error) {
-      onError(error);
+      onError(error as Error);
     }
   };
   return (

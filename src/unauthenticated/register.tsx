@@ -26,7 +26,7 @@ function RegisterScreen({
       await run(register(values));
     } catch (error) {
       console.log(error);
-      onError(error);
+      onError(error as Error);
     }
   };
   return (

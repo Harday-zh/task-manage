@@ -16,7 +16,7 @@ import { Spin } from "antd";
 import { CreateKanban } from "./create-kanban";
 import { TaskModal } from "./task-modal";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { Drag, Drop, DropChild } from "components/drag-and-drop";
+import { Drag, Drop } from "components/drag-and-drop";
 
 export const KanbanScreen = () => {
   useDocumentTitle("看板列表");
@@ -51,7 +51,7 @@ export const KanbanScreen = () => {
               direction={"horizontal"}
               droppableId={"kanban"}
             >
-              <DropChild style={{ display: "flex" }}>
+              <div style={{ display: "flex" }}>
                 {kanbans?.map((kanban, index) => (
                   <Drag
                     key={kanban.id}
@@ -64,7 +64,7 @@ export const KanbanScreen = () => {
                     ></KanbanColumn>
                   </Drag>
                 ))}
-              </DropChild>
+              </div>
             </Drop>
             <CreateKanban />
           </ColumnsContainer>

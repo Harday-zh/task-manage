@@ -10,7 +10,7 @@ import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeleteKanban } from "utils/kanban";
 import { ButtonNoPadding, Row } from "components/lib";
-import { Drag, Drop, DropChild } from "components/drag-and-drop";
+import { Drag, Drop } from "components/drag-and-drop";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 
@@ -57,7 +57,7 @@ export const KanbanColumn = React.forwardRef<
           droppableId={String(kanban.id)}
         >
           {/* minHeight 防止某个看板内容为空， 导致不能再拖拽进入 */}
-          <DropChild style={{ minHeight: "5px" }}>
+          <div style={{ minHeight: "5px" }}>
             {tasks?.map((task, taskIndex) => (
               <Drag
                 key={task.id}
@@ -69,7 +69,7 @@ export const KanbanColumn = React.forwardRef<
                 </div>
               </Drag>
             ))}
-          </DropChild>
+          </div>
         </Drop>
         <CreateTask kanbanId={kanban.id} />
       </TaskContainer>
