@@ -1,12 +1,8 @@
-const foreverPendingPromise = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log('resolve called after 1 second');
-    resolve(new Promise(() => {}));
-  }, 1000);
-  setTimeout(() => {
-    console.log('reject called after 2 seconds');
-    reject(new Promise(() => {}));
-  }, 2000);
-});
-
-export default foreverPendingPromise;
+// 实现一个永远阻塞、3秒内完成执行、返回自己完整源代码的函数
+// 这是一个quine函数（自产生程序），能够输出自己的完整源代码，然后进入无限循环
+(function f() {
+  // 输出函数的完整源代码
+  console.log('(' + f + ')()');
+  // 进入无限循环，永远阻塞
+  for (;;);
+})();
