@@ -9,7 +9,7 @@ export const useEpics = (params?: Partial<Epic>) => {
   // 指定Error
   // return useQuery<Project[], Error>(['projects', params], ()=> client('projects', { data: params }));
   // 不指定Error， 通过ErrorBox处理
-  return useQuery<Epic[]>(["epics", params], () =>
+  return useQuery(["epics", params], () =>
     client("epics", { data: params })
   );
 };
