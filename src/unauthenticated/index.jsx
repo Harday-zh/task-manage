@@ -1,7 +1,7 @@
 import { Button, Card, Divider } from "antd";
 import React, { useState } from "react";
 import LoginScreen from "./login";
-import RegisterScreen from "./register";
+import RegisterScreen from "./register.tsx";
 import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";

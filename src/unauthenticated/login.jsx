@@ -3,17 +3,10 @@ import React from "react";
 import { Button, Form, Input } from "antd";
 import { LongButton } from "unauthenticated";
 import { useAsync } from "utils/use-async";
-function LoginScreen({
-  onError,
-}: {
-  onError: (error: Error) => void;
-}): React.ReactElement<any> {
+function LoginScreen({ onError }) {
   const { login, user } = useAuth();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
-  const handleSubmit = async (values: {
-    username: string;
-    password: string;
-  }) => {
+  const handleSubmit = async (values) => {
     try {
       await run(login(values));
     } catch (error) {

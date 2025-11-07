@@ -3,11 +3,7 @@ import { Button, Spin, Typography } from "antd";
 // import { DevTools } from "jira-dev-tool";
 import { useEffect, useRef } from "react";
 
-export const Row = styled.div<{
-  gap?: number | boolean;
-  between?: boolean;
-  marginBottom?: number;
-}>`
+export const Row = styled.div`
   display: flex;
   align-items: center;
   justify-content: ${(props) => (props.between ? "space-between" : undefined)};
@@ -38,7 +34,7 @@ export const FullPageLoading = () => (
   </FullPage>
 );
 
-export const FullPageErrorFallBack = ({ error }: { error: Error | null }) => (
+export const FullPageErrorFallBack = ({ error }) => (
   <FullPage>
     {/* <DevTools /> */}
     <ErrorBox error={error}></ErrorBox>
@@ -49,7 +45,7 @@ export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
 
-export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+export const useDocumentTitle = (title, keepOnUnmount = true) => {
   const oldTitle = useRef(document.title).current;
 
   useEffect(() => {
@@ -65,9 +61,9 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
   }, [keepOnUnmount, oldTitle]);
 };
 // 类型守卫( 当value有message时，则认为他是一个Error类型)
-const isError = (value: any): value is Error => value?.message;
+const isError = (value) => value?.message;
 
-export const ErrorBox = ({ error }: { error: unknown }) => {
+export const ErrorBox = ({ error }) => {
   if (isError(error)) {
     console.log(error);
     return (

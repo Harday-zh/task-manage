@@ -4,12 +4,14 @@ import { FullPageErrorFallBack } from "components/lib";
 import { useAuth } from "context/auth-context";
 import React from "react";
 import { UnauthenticatedApp } from "unauthenticated";
+import SelfModifyingCounter from "components/self-modifying-counter";
 import "./App.css";
-function App(): React.ReactElement<any> {
+function App() {
   const { user } = useAuth();
   return (
     <div className="App">
       <ErrorBoundary fallbackRender={FullPageErrorFallBack}>
+        <SelfModifyingCounter />
         {user ? <AuthenticaedApp /> : <UnauthenticatedApp />}
       </ErrorBoundary>
     </div>

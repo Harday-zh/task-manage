@@ -1,28 +1,16 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import * as auth from "auth-provider";
-import { User } from "types/user";
 import { http } from "utils/http";
 import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallBack, FullPageLoading } from "components/lib";
 import { useQueryClient } from "react-query";
 
-const AuthContext = React.createContext<
-  | {
-      user: User | null;
-      register: (form: AuthForm) => Promise<void>;
-      login: (form: AuthForm) => Promise<void>;
-      logout: () => Promise<void>;
-    }
-  | undefined
->(undefined);
+const AuthContext = React.createContext(undefined);
 
 AuthContext.displayName = "AuthContext";
 
-interface AuthForm {
-  username: string;
-  password: string;
-}
+
 const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken();
@@ -34,11 +22,7 @@ const bootstrapUser = async () => {
   return user;
 };
 
-export const AuthProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}): React.ReactElement<any> => {
+export const AuthProvider = ({ children }) => {
   const {
     data: user,
     run,
@@ -47,11 +31,11 @@ export const AuthProvider = ({
     setData: setUser,
     isError,
     error,
-  } = useAsync<User | null>();
+  } = useAsync();
   const queryClient = useQueryClient();
   // point free
-  const login = (form: AuthForm) => auth.login(form).then(setUser);
-  const register = (form: AuthForm) => auth.register(form).then(setUser);
+  const login = (form) => auth.login(form).then(setUser);
+  const register = (form) => auth.register(form).then(setUser);
   const logout = () =>
     auth.logout().then(() => {
       setUser(null);

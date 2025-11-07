@@ -1,27 +1,25 @@
 import React from "react";
-import { Kanban } from "types/kanban";
 import { useTasks } from "utils/task";
 import { useTaskTypes } from "utils/task-type";
 import { useKanbanQueryKey, useTaskModal, useTasksSearchParams } from "./utils";
 import styled from "@emotion/styled";
 import { Card, Dropdown, Menu, Modal } from "antd";
 import { CreateTask } from "./create-task";
-import { Task } from "types/task";
 import { Mark } from "components/mark";
 import { useDeleteKanban } from "utils/kanban";
 import { ButtonNoPadding, Row } from "components/lib";
-import { Drag, Drop, DropChild } from "components/drag-and-drop";
+import { Drag, Drop } from "components/drag-and-drop";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 
-const TaskTypeIcon = ({ id }: { id: number }) => {
+const TaskTypeIcon = ({ id }) => {
   const { data: taskTypes } = useTaskTypes();
   const name = taskTypes?.find((taskType) => taskType.id === id)?.name;
   if (!name) return null;
   return <img alt="" src={name === "task" ? taskIcon : bugIcon} />;
 };
 
-const TaskCard = ({ task }: { task: Task }) => {
+const TaskCard = ({ task }) => {
   const { startEdit } = useTaskModal();
   const { name: keyword } = useTasksSearchParams();
   return (
@@ -38,10 +36,7 @@ const TaskCard = ({ task }: { task: Task }) => {
   );
 };
 
-export const KanbanColumn = React.forwardRef<
-  HTMLDivElement,
-  { kanban: Kanban }
->(({ kanban, ...props }, ref) => {
+export const KanbanColumn = React.forwardRef(({ kanban, ...props }, ref) => {
   const { data: allTasks } = useTasks(useTasksSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
   return (
@@ -57,7 +52,7 @@ export const KanbanColumn = React.forwardRef<
           droppableId={String(kanban.id)}
         >
           {/* minHeight 防止某个看板内容为空， 导致不能再拖拽进入 */}
-          <DropChild style={{ minHeight: "5px" }}>
+          <div style={{ minHeight: "5px" }}>
             {tasks?.map((task, taskIndex) => (
               <Drag
                 key={task.id}
@@ -69,7 +64,7 @@ export const KanbanColumn = React.forwardRef<
                 </div>
               </Drag>
             ))}
-          </DropChild>
+          </div>
         </Drop>
         <CreateTask kanbanId={kanban.id} />
       </TaskContainer>
@@ -77,9 +72,9 @@ export const KanbanColumn = React.forwardRef<
   );
 });
 
-const More = ({ kanban }: { kanban: Kanban }) => {
+const More = ({ kanban }) => {
   const { mutateAsync: deleteKanban } = useDeleteKanban(useKanbanQueryKey());
-  const cofirmDeleteProject = (id: number) => {
+  const cofirmDeleteProject = (id) => {
     Modal.confirm({
       title: "确定删除这个看板吗？",
       content: "点击确定删除",

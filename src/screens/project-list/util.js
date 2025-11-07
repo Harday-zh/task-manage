@@ -14,7 +14,7 @@ export const useProjectSearchParams = () => {
       [param]
     ),
     setParam,
-  ] as const; // 注意点！！！加const
+  ];
 };
 
 // modal参数
